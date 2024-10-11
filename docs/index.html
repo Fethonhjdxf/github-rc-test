@@ -9,9 +9,9 @@
     <h1>My Cloud Files</h1>
     <div id="file-list"></div>
     <script>
-        function encodeUrl(remote, path) {
-            // Encode each component separately
-            return `${encodeURIComponent(remote)}:${encodeURIComponent(path)}`;
+        function encodeUrl(path) {
+            // Encode the URL path component
+            return encodeURIComponent(path);
         }
 
         fetch('file-list.json')
@@ -21,7 +21,7 @@
                 let fileList = document.getElementById('file-list');
                 data.forEach(file => {
                     let fileItem = document.createElement('div');
-                    let url = encodeUrl(file.Remote, file.Path);
+                    let url = encodeUrl(file.Path);
                     fileItem.innerHTML = `<a href="${url}" download>${file.Name}</a>`;
                     fileList.appendChild(fileItem);
                 });
