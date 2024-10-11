@@ -33,12 +33,14 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.email "Fethonhjdxf@outlook.com"
-          git config --global user.name "Fethonhjdxf"
+          git config --global user.email "your-email@example.com"
+          git config --global user.name "Your Name"
 
-      - name: Update GitHub Pages
+      - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         run: |
           cd docs
           git add .
           git commit -m "Update file list"
-          git push
+          git push https://github.com/${{ github.repository }} HEAD:main
