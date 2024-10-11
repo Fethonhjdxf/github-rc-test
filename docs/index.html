@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud File Browser</title>
+</head>
+<body>
+    <h1>My Cloud Files</h1>
+    <div id="file-list"></div>
+    <script>
+        fetch('file-list.json')
+            .then(response => response.json())
+            .then(data => {
+                let fileList = document.getElementById('file-list');
+                data.forEach(file => {
+                    let fileItem = document.createElement('div');
+                    fileItem.innerHTML = `<a href="${file.Remote}:${file.Path}" download>${file.Name}</a>`;
+                    fileList.appendChild(fileItem);
+                });
+            });
+    </script>
+</body>
+</html>
