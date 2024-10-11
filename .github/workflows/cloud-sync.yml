@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # Add this line to enable manual runs
+  workflow_dispatch: # Enable manual runs
 
 jobs:
   sync:
@@ -20,6 +20,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y rclone jq
+
+      - name: Grant execute permissions
+        run: |
+          chmod +x ./scripts/sync-and-generate-list.sh
 
       - name: Sync Clouds and Generate File List
         env:
