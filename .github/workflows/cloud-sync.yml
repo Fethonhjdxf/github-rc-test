@@ -34,10 +34,8 @@ jobs:
           chmod +x ./scripts/sync-and-generate-list.sh
 
       - name: Sync Clouds and Generate File List
-        env:
-          RCLONE_CONFIG: $HOME/.config/rclone/rclone.conf
         run: |
-          ./scripts/sync-and-generate-list.sh
+          RCLONE_CONFIG=$HOME/.config/rclone/rclone.conf ./scripts/sync-and-generate-list.sh
 
       - name: Configure Git
         run: |
