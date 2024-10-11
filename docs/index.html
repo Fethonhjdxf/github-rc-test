@@ -17,18 +17,13 @@
         let currentPage = 1;
         const itemsPerPage = 20;
 
-        function encodeUrl(path) {
-            return encodeURIComponent(path);
-        }
-
         function displayFiles(files) {
             let fileList = document.getElementById('file-list');
             fileList.innerHTML = '';
             files.forEach(file => {
                 let fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
-                let url = encodeUrl(file.Path);
-                fileItem.innerHTML = `<a href="${url}" download>${file.Name}</a>`;
+                fileItem.innerHTML = `<a href="${file.Url}" download>${file.Name}</a>`;
                 fileList.appendChild(fileItem);
             });
         }
@@ -58,7 +53,6 @@
         fetch('file-list.json')
             .then(response => response.json())
             .then(data => {
-                console.log(data);  // Log data to console to verify
                 setupPagination(data);
             })
             .catch(error => {
