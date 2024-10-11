@@ -4,21 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloud File Browser</title>
+    <style>
+        .file-item { margin: 5px 0; }
+        .pagination { margin: 20px; text-align: center; }
+    </style>
 </head>
 <body>
     <h1>My Cloud Files</h1>
     <div id="file-list"></div>
+    <div class="pagination" id="pagination"></div>
     <script>
-        fetch('file-list.json')
-            .then(response => response.json())
-            .then(data => {
-                let fileList = document.getElementById('file-list');
-                data.forEach(file => {
-                    let fileItem = document.createElement('div');
-                    fileItem.innerHTML = `<a href="${file.Remote}:${file.Path}" download>${file.Name}</a>`;
-                    fileList.appendChild(fileItem);
-                });
+        let sampleData = [
+            { "Path": "TVKK DATA 02/Interstellar - Trailer - Official Warner Bros. UK 1080p25.0fps 5147.webm", "Name": "Interstellar - Trailer - Official Warner Bros. UK 1080p25.0fps 5147.webm" }
+            // Add more sample data here if needed
+        ];
+
+        let currentPage = 1;
+        const itemsPerPage = 20;
+
+        function encodeUrl(path) {
+            return encodeURIComponent(path);
+        }
+
+        function displayFiles(files) {
+            let fileList = document.getElementById('file-list');
+            fileList.innerHTML = '';
+            files.forEach(file => {
+                let fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                let url = encodeUrl(file.Path);
+                fileItem.innerHTML = `<a href="${url}" download>${file.Name}</a>`;
+                fileList.appendChild(fileItem);
             });
+        }
+
+        function setupPagination(files) {
+            const pagination = document.getElementById('pagination');
+            const totalPages = Math.ceil(files.length / itemsPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                let pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.onclick = function(event) {
+                    event.preventDefault();
+                    currentPage = i;
+                    const start = (currentPage - 1) * itemsPerPage;
+                    const end = start + itemsPerPage;
+                    displayFiles(files.slice(start, end));
+                };
+                pagination.appendChild(pageLink);
+            }
+
+            // Display the first page initially
+            displayFiles(files.slice(0, itemsPerPage));
+        }
+
+        setupPagination(sampleData);
     </script>
 </body>
 </html>
