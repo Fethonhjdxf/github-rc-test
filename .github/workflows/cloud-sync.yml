@@ -31,6 +31,11 @@ jobs:
         run: |
           ./scripts/sync-and-generate-list.sh
 
+      - name: Configure Git
+        run: |
+          git config --global user.email "Fethonhjdxf@outlook.com"
+          git config --global user.name "Fethonhjdxf"
+
       - name: Update GitHub Pages
         run: |
           cd docs
