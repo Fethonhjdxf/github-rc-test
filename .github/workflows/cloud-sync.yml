@@ -52,4 +52,4 @@ jobs:
           cd docs
           git add file-list.json
           git diff-index --quiet HEAD || git commit -m "Update file list"
-          git push https://:${{ secrets.PAT }}@github.com/${{ github.repository }}.git HEAD:main || echo "No changes to commit"
+          git push https://Fethonhjdxf:${{ secrets.PAT }}@github.com/${{ github.repository }}.git HEAD:main || echo "No changes to commit"
