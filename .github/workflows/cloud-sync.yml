@@ -24,8 +24,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y rclone jq
 
-      - name: Download rclone config from Gist
+      - name: Create rclone config directory
         run: |
+          mkdir -p ~/.config/rclone
           curl -L "${{ secrets.RCLONE_CONFIG }}" -o ~/.config/rclone/rclone.conf
 
       - name: Grant execute permissions
