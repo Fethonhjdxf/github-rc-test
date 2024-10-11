@@ -1,0 +1,34 @@
+name: Cloud Sync
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up rclone
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rclone jq
+
+      - name: Sync Clouds and Generate File List
+        env:
+          RCLONE_CONFIG: ${{ secrets.RCLONE_CONFIG }}
+        run: |
+          ./scripts/sync-and-generate-list.sh
+
+      - name: Update GitHub Pages
+        run: |
+          cd docs
+          git add .
+          git commit -m "Update file list"
+          git push
