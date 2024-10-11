@@ -17,6 +17,7 @@
         fetch('file-list.json')
             .then(response => response.json())
             .then(data => {
+                console.log(data);  // Log data to console
                 let fileList = document.getElementById('file-list');
                 data.forEach(file => {
                     let fileItem = document.createElement('div');
@@ -24,6 +25,9 @@
                     fileItem.innerHTML = `<a href="${url}" download>${file.Name}</a>`;
                     fileList.appendChild(fileItem);
                 });
+            })
+            .catch(error => {
+                console.error('Error fetching file list:', error);
             });
     </script>
 </body>
