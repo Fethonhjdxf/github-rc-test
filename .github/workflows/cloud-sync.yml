@@ -51,5 +51,5 @@ jobs:
         run: |
           cd docs
           git add file-list.json
-          git diff-index --quiet HEAD || git commit -m "Update file list"
+          git diff --cached --exit-code || git commit -m "Update file list"
           git push https://Fethonhjdxf:${{ secrets.PAT }}@github.com/${{ github.repository }}.git HEAD:main || echo "No changes to commit"
