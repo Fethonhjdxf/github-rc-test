@@ -21,13 +21,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y rclone jq
 
+      - name: Create rclone config
+        run: |
+          mkdir -p ~/.config/rclone
+          echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
+
       - name: Grant execute permissions
         run: |
           chmod +x ./scripts/sync-and-generate-list.sh
 
       - name: Sync Clouds and Generate File List
         env:
-          RCLONE_CONFIG: ${{ secrets.RCLONE_CONFIG }}
+          RCLONE_CONFIG: ~/.config/rclone/rclone.conf
         run: |
           ./scripts/sync-and-generate-list.sh
 
@@ -41,8 +46,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
-          git remote set-url origin https://${{ secrets.PAT }}@github.com/${{ github.repository }}.git
           cd docs
           git add file-list.json
           git diff-index --quiet HEAD || git commit -m "Update file list"
-          git push origin HEAD:main || echo "No changes to commit"
+          git push https://Fethonhjdxf:${{ secrets.PAT }}@github.com/${{ github.repository }}.git HEAD:main || echo "No changes to commit"
