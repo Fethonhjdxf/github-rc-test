@@ -10,14 +10,14 @@
     <div id="file-list"></div>
     <script>
         function encodeUrl(remote, path) {
-            // Encode the URL components
+            // Encode each component separately
             return `${encodeURIComponent(remote)}:${encodeURIComponent(path)}`;
         }
 
         fetch('file-list.json')
             .then(response => response.json())
             .then(data => {
-                console.log(data);  // Log data to console
+                console.log(data);  // Log data to console to verify
                 let fileList = document.getElementById('file-list');
                 data.forEach(file => {
                     let fileItem = document.createElement('div');
