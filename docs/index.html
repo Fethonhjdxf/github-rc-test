@@ -14,11 +14,6 @@
     <div id="file-list"></div>
     <div class="pagination" id="pagination"></div>
     <script>
-        let sampleData = [
-            { "Path": "TVKK DATA 02/Interstellar - Trailer - Official Warner Bros. UK 1080p25.0fps 5147.webm", "Name": "Interstellar - Trailer - Official Warner Bros. UK 1080p25.0fps 5147.webm" }
-            // Add more sample data here if needed
-        ];
-
         let currentPage = 1;
         const itemsPerPage = 20;
 
@@ -60,7 +55,15 @@
             displayFiles(files.slice(0, itemsPerPage));
         }
 
-        setupPagination(sampleData);
+        fetch('file-list.json')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);  // Log data to console to verify
+                setupPagination(data);
+            })
+            .catch(error => {
+                console.error('Error fetching file list:', error);
+            });
     </script>
 </body>
 </html>
