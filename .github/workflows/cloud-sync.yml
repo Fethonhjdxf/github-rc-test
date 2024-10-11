@@ -26,8 +26,8 @@ jobs:
 
       - name: Create rclone config directory
         run: |
-          mkdir -p ~/.config/rclone
-          curl -L "${{ secrets.RCLONE_CONFIG }}" -o ~/.config/rclone/rclone.conf
+          mkdir -p $HOME/.config/rclone
+          curl -L "${{ secrets.RCLONE_CONFIG }}" -o $HOME/.config/rclone/rclone.conf
 
       - name: Grant execute permissions
         run: |
@@ -35,7 +35,7 @@ jobs:
 
       - name: Sync Clouds and Generate File List
         env:
-          RCLONE_CONFIG: ~/.config/rclone/rclone.conf
+          RCLONE_CONFIG: $HOME/.config/rclone/rclone.conf
         run: |
           ./scripts/sync-and-generate-list.sh
 
