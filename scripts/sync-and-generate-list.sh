@@ -9,5 +9,5 @@ echo "[]" > $temp_file
 
 # Iterate through each remote and list files
 for remote in $remotes; do
-    rclone lsjson $remote --recursive | jq -s '.[]' >> $temp_file
+    rclone lsjson $remote --recursive | jq '.[] | {Path: .Path, Name: .Name, Remote: "'$remote'"}' | jq -s '.' > $temp_file
 done
